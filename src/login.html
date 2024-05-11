@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <link rel="stylesheet" href="./css/login.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+
+    <script type="module" src="./js/auth/login.js"></script>
+</head>
+<body class="body">
+
+    <div class="alert alert-success d-none" role="alert"></div>
+    <div class="alert alert-danger d-none" role="alert"></div>
+    
+        <div class="form-box">
+            <div class="logo">
+                <img src="assets/imgs/loginLogo.png" alt="Logo">
+            </div>
+            <div class="login-text">
+                <h2>Log In</h2>
+            </div>
+            <div class="social-icons">
+                <i class="fab fa-facebook"></i>
+                <i class="fab fa-instagram"></i>
+                <i class="fab fa-twitter"></i>
+            </div>
+            <form id="form_login">
+
+                <!-- Email Field -->
+                <input type="email"
+                 class="input-field" 
+                 name="email"
+                 id="email"
+                 placeholder="Email" 
+                 required>
+
+                 <!-- Password Field -->
+                <input type="password" 
+                class="input-field" 
+                name="password"
+                id="password"
+                placeholder="Password"
+                required>
+
+                <div class="submit">
+                    <!-- <a href="collection.html"> -->
+                        <button type="submit" class="submit-btn">Log In</button>
+                    <!-- </a> -->
+                    <p class="redirect-text">Don't have an account?  <a href="register.html" onclick="register()"> Register here</a></p>
+                </div>
+
+            </form>
+        </div>
+    
+    <script src="./js/login.js"></script>
+
+</body>
+</html>

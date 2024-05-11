@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Cocktail Cove App</title>
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    
+    <script type="module" src="https://unpkg.com/@ionic/pwa-elements@latest/dist/ionicpwaelements/ionicpwaelements.esm.js"></script>
+    <script nomodule src="https://unpkg.com/@ionic/pwa-elements@latest/dist/ionicpwaelements/ionicpwaelements.js"></script>
+
+    <link rel="stylesheet" href="./css/profile1.css" />
+    <script type="module" src="./js/main.js"></script>
+
+    <link rel="icon" type="image/x-icon" href="./assets/icon/favicon.ico" />
+    <link rel="manifest" href="./manifest.json" />
+    <meta name="theme-color" content="#31d53d" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+        
+
+  </head>
+  <body class="body">
+    <!--navbar-->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container-fluid">
+           <!-- Back icon -->
+           <div class="back">
+            <a href="profile.html">
+                <i class="fas fa-arrow-left"></i>
+              </a>
+        </div>
+        <!-- Edit profile -->
+        <div class="edit-profile">Profile</div>
+        </div>
+      </nav>
+
+      <div class="bg">
+        <img src="assets/imgs/profileBackground.jpg" alt="bg">
+      </div>
+    
+      <div class="container">
+        <div class="img-profile">
+            <img src="assets/imgs/default.jpg" alt="" id="photo1">
+            <div class="name">James Smith</div>
+            <div class="id">ID 121210</div>
+        </div>
+    </div>
+
+    <div class="post-icon">
+        <a href="#" class="icon-link active" id="table-icon">
+          <i class="fa-sharp fa-solid fa-table"></i>
+        </a>
+    </div>
+    
+    <div
+     class="menu active" id="table-menu">
+    
+        <div class="container">
+            <div class="row">
+    
+                <div class="col-6 col-md-3 py-3">
+    
+                    <div class="card">
+                        <img src="assets/imgs/Barbie Drink.png" alt="">
+                        <div class="card-info">
+                            <h3>Barbie Drink</h3>
+                            <a href="barbieDrink.html" class="btn view-button">View Recipe</a>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="col-6 col-md-3 py-3">
+    
+                    <div class="card">
+                        <img src="assets/imgs/GIN Universe Cocktail.png" alt="">
+                        <div class="card-info">
+                            <h3>GIN Universe Cocktail</h3>
+                            <a href="ginUniverse.html" class="btn view-button">View Recipe</a>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="col-6 col-md-3 py-3">
+    
+                    <div class="card">
+                        <img src="assets/imgs/Zombie Cocktail.png" alt="">
+                        <div class="card-info">
+                            <h3>Zombie Cocktail</h3>
+                            <a href="zombieCocktail.html" class="btn view-button">View Recipe</a>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="col-6 col-md-3 py-3">
+    
+                    <div class="card">
+                        <img src="assets/imgs/Gsm Margarita.png" alt="">
+                        <div class="card-info">
+                            <h3>GSM Margarita</h3>
+                            <a href="gsmMargarita.html" class="btn view-button">View Recipe</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+      <!--bottom navbar-->
+  <!-- <div class="bot-nav">
+    <div class="site">
+      <nav>
+        <ul>
+          <li>
+            <a href="collection.html">
+              <i class="fa-solid fa-martini-glass-citrus"></i>
+              <span class="title">Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="favorites.html">
+              <i class="fa-solid fa-bookmark"></i>
+              <span class="title">Favorites</span>
+            </a>
+          </li>
+          <li >
+            <a href="upload.html" >
+              <i class="fa-solid fa-circle-plus"></i>
+              <span class="title">Upload</span>
+            </a>
+          </li>
+          <li class="active">
+            <a href="#">
+              <i class="fa-solid fa-user"></i>
+              <span class="title">Account</span>
+            </a>
+          </li>
+          <li>
+            <a href="more.html">
+              <i class="fa-solid fa-circle-info"></i>
+              <span class="title">Info</span>
+            </a>
+          </li>
+          <li class="circle">
+            <span  class="corner"></span>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div> -->
+
+  <script>
+    // Retrieve the image data URL from local storage
+    var savedImage = localStorage.getItem('profileImage');
+    if (savedImage) {
+      document.getElementById('photo1').setAttribute('src', savedImage);
+    }
+  </script>
+
+
+  <!-- <script type="module" src="./js/share.js"></script> -->
+  <!-- <script type="module" src="./js/dp.js"></script> -->
+  <script type="module" src="./js/bottomNav.js"></script>
+
+    
+  </body>
+  </html>

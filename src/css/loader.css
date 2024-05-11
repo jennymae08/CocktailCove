@@ -1,0 +1,84 @@
+/* pre-loader */
+* {
+    box-sizing: border-box;
+  }
+  :root{
+    --main-color:#d3ad7f;
+    --black:#13131a;
+    --bg:#010103;
+    --border:.1rem solid rgba(255,255,255,.3)
+    --clr: #222327;
+    --sec:#b23c00;
+    --effect: hover 1s linear infinite;
+  }
+.loader{
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    background:var(--black);
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: opacity 0.5s ease;
+  }
+  
+  .loader p{
+    display: inline-block;
+    text-align: center;
+    font-size: 2.5em;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 600;
+    transform: scale(.5);
+    color: #121212;
+    -webkit-text-stroke: 2px gray;
+  }
+  
+  .loader.hidden {
+    opacity: 0; 
+    pointer-events: none; 
+  }
+  
+  .loader p:nth-child(1){
+    animation: var(--effect);
+  }
+  .loader p:nth-child(2){
+    animation: var(--effect) .125s;
+  }
+  .loader p:nth-child(3){
+    animation: var(--effect) .25s;
+  }
+  .loader p:nth-child(4){
+    animation: var(--effect) .375s;
+  }
+  .loader p:nth-child(5){
+    animation: var(--effect) .5s;
+  }
+  .loader p:nth-child(6){
+    animation: var(--effect) .657s;
+  }
+  .loader p:nth-child(7){
+    animation: var(--effect) .75s;
+  }
+  
+  @keyframes hover{
+    0%{
+        transform: scale(.5);
+        color: #121212;
+        -webkit-text-stroke: 2px gray;
+    }
+  
+    20%{
+        transform: scale(1);
+        color: pink;
+        -webkit-text-stroke: 3px rgb(26, 211, 38);
+        filter: drop-shadow(0 0 1px black)drop-shadow(0 0 1px black)drop-shadow(0 0 3px red)drop-shadow(0 0 5px red)hue-rotate(10turn);
+    }
+  
+    50%{
+        transform: scale(.5);
+        color: #121212;
+        -webkit-text-stroke: 2px gray;
+  
+    }
+  
+  }

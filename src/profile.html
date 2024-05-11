@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Awesome Capacitor App</title>
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    
+    <script type="module" src="https://unpkg.com/@ionic/pwa-elements@latest/dist/ionicpwaelements/ionicpwaelements.esm.js"></script>
+    <script nomodule src="https://unpkg.com/@ionic/pwa-elements@latest/dist/ionicpwaelements/ionicpwaelements.js"></script>
+
+    
+    <link rel="stylesheet" href="./css/profile.css" />
+    <script type="module" src="./js/system/logout.js"></script>
+
+    <link rel="icon" type="image/x-icon" href="./assets/icon/favicon.ico" />
+    <link rel="manifest" href="./manifest.json" />
+    <meta name="theme-color" content="#31d53d" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  </head>
+  <body class="body">
+
+    <div class="alert alert-success d-none" role="alert"></div>
+    <div class="alert alert-danger d-none" role="alert"></div>
+    
+    <!--navbar-->
+    <nav class="navbar fixed-top">
+      <div class="container-fluid">
+        <img src="assets/imgs/clo.png" alt="Logo" class="logo-img rounded-circle" width="50" height="50">
+        <a class="navbar-brand me-auto" href="" style="color: white;">Cocktail Cove</a>
+      </div>
+    </nav>
+
+      <div class="bg">
+        <img src="assets/imgs/profileBackground.jpg" alt="bg">
+      </div>
+    
+      <div class="container">
+        <div class="img-profile">
+            <img src="assets/imgs/default.jpg" alt="" id="photo">
+            <input type="file" id="file">
+            <label for="file" id="uploadbtn"><i class="fa-solid fa-camera"></i></label>
+            <div class="name" id="photoName">James Smith</div> 
+            <div class="id">ID 121210</div>
+        </div>
+    </div>
+    
+    
+
+        <!-- <div class="edit-btn">
+          <button class="btn" id="shareProfileBtn">Share Profile</button>
+        </div> -->
+
+
+      <div class="item">
+        <i class="fa-solid fa-user"></i>
+        <span id="name" onclick="edit('name')">James Smith</span> <!-- Click to edit the name -->
+        <div class="icon" onclick="edit('name')">
+            <i class="fa-solid fa-chevron-right"></i>
+        </div>
+    </div>
+
+      <div class="item">
+        <i class="fa-solid fa-cake-candles"></i>
+        <span id="birthdate">March 01, 2003</span>
+        <div class="icon" onclick="edit('birthdate')">
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+      </div>
+      
+      <div class="item">
+        <i class="fa-solid fa-location-dot"></i>
+        <span id="address">Ampayon, Butuan City</span>
+        <div class="icon" onclick="edit('address')">
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+      </div>
+      
+      <div class="item">
+        <i class="fa-solid fa-phone"></i>
+        <span id="Mobile-Number">09090900143</span>
+        <div class="icon" onclick="edit('Mobile-Number')">
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+      </div>
+
+      <div class="item">
+        <i class="fa-solid fa-martini-glass"></i>
+        <span>My post</span>
+        <a href="profile1.html">
+          <div class="icon">
+              <i class="fa-solid fa-chevron-right"></i>
+          </div>
+        </a>
+      </div>
+
+      <div class="item-logout" id="btn_logout">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span>Log Out</span>
+          <div class="icon">
+              <i class="fa-solid fa-chevron-right"></i>
+          </div>
+      </div>
+        
+      
+    
+      <!--bottom navbar-->
+  <div class="bot-nav">
+    <div class="site">
+      <nav>
+        <ul>
+          <li>
+            <a href="collection.html">
+              <i class="fa-solid fa-martini-glass-citrus"></i>
+              <span class="title">Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="favorites.html">
+              <i class="fa-solid fa-bookmark"></i>
+              <span class="title">Favorites</span>
+            </a>
+          </li>
+          <li >
+            <a href="upload.html" >
+              <i class="fa-solid fa-circle-plus"></i>
+              <span class="title">Upload</span>
+            </a>
+          </li>
+          <li class="active">
+            <a href="#">
+              <i class="fa-solid fa-user"></i>
+              <span class="title">Account</span>
+            </a>
+          </li>
+          <li>
+            <a href="more.html">
+              <i class="fa-solid fa-circle-info"></i>
+              <span class="title">Info</span>
+            </a>
+          </li>
+          <li class="circle">
+            <span  class="corner"></span>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <script>
+    // Check if naa bay saved image daan
+    var savedImage = localStorage.getItem('profileImage');
+    if (savedImage) {
+      document.getElementById('photo').setAttribute('src', savedImage);
+    }
+
+    document.getElementById('uploadbtn').addEventListener('click', function () {
+      document.getElementById('file').click();
+    });
+
+    document.getElementById('file').addEventListener('change', function () {
+      var file = this.files[0];
+      if (file) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          document.getElementById('photo').setAttribute('src', e.target.result);
+          // Save the image data to local storage
+          localStorage.setItem('profileImage', e.target.result);
+        }
+        reader.readAsDataURL(file);
+      }
+    });
+  </script>
+
+
+
+  <!--EDIT INFO  -->
+<script>
+  
+  function edit(fieldId) {
+      var field = document.getElementById(fieldId);
+      var currentValue = field.innerText.trim();
+
+      var inputField = document.createElement('input');
+      inputField.setAttribute('type', 'text');
+      inputField.setAttribute('value', currentValue);
+      inputField.classList.add('input-edit'); 
+
+      // Replace span with input field
+      field.parentNode.replaceChild(inputField, field);
+
+      // Focus on the input field
+      inputField.focus();
+
+      // Function to save changes
+      function saveChanges() {
+          var newValue = inputField.value;
+          localStorage.setItem(fieldId, newValue); // Save the new value to localStorage
+      }
+
+      // Add event listener to save changes when pressing Enter key
+      inputField.addEventListener('keypress', function (e) {
+          if (e.key === 'Enter') {
+              saveChanges(); // Save changes
+              field.innerText = inputField.value;
+              document.getElementById('photoName').innerText = inputField.value; // Update name below the profile picture
+              inputField.parentNode.replaceChild(field, inputField);
+          }
+      });
+
+      // Add event listener to save changes when clicking outside the input field
+      inputField.addEventListener('blur', function () {
+          saveChanges(); // Save changes
+          field.innerText = inputField.value;
+          document.getElementById('photoName').innerText = inputField.value; // Update name below the profile picture
+          inputField.parentNode.replaceChild(field, inputField);
+      });
+  }
+</script>
+
+  
+
+  <!-- <script type="module" src="./js/dp.js"></script> -->
+  <!-- <script src="./js/info.js"></script> -->
+  <!-- <script type="module" src="./js/logout.js"></script> -->
+  <script type="module" src="./js/bottomNav.js"></script>
+  
+
+
+</body>
+</html>

@@ -1,0 +1,127 @@
+*{
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+:root{
+    --main-color:#d3ad7f;
+    --black:#13131a;
+    --bg:#010103;
+    --border:.1rem solid rgba(255,255,255,.3)
+    --clr: #222327;
+    --kyte:#060916;
+    --blue:#00001f;
+    --sec:#b23c00;
+  }
+  .body {
+    background:var(--black); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /* position: fixed; */
+}
+.start {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    max-width: 600px; 
+    padding: 0 20px; 
+    text-align: center; 
+}
+
+.start img {
+    width: 350px;
+    height: 300; 
+    border-radius: 50%;
+    animation: fadeIn 1s ease-out; 
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.section-heading {
+    font-size: 1.5em;
+    font-family: "Lora", serif;
+    color: #fff;
+    margin-top: 40px;
+    font-weight: bold;
+    text-transform: capitalize;
+    animation: slideInLeft 1s ease-out; 
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+.get-started-paragraph {
+    font-size: 1.1em;
+    color: #fff;
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    margin-top: 25px;
+    line-height: 1.5;
+    margin-bottom: 50px;
+    animation: slideInRight 1s ease-out; 
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+.start .btn {
+    padding: 14px 29px; 
+    background-color: #b23c00; 
+    color: #fff; 
+    border: none;
+    border-radius: 25px; 
+    text-decoration: none;
+    font-size: 1em; /
+    font-family: "Merriweather", serif;
+    font-weight: 900;
+    transition: transform 0.3s ease-in-out;
+}
+
+.start .btn:hover {
+    color: #fff;
+    background-color: #b23c00;
+    transform: scale(1.08);
+    
+}
+
+@media (max-width: 600px) {
+    .section-heading{
+        font-size: 1.4em;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    .get-started-paragraph{
+        font-size: 15.6px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+}
