@@ -1,7 +1,7 @@
 import { supabase, successNotification, errorNotification } from "../main";
 
-// Load data
-getDatas();
+// Base URL for cocktail images
+const cocktailImageUrl = "https://hiyluoiecwditapzngvr.supabase.co/storage/v1/object/public/Cocktail/";
 
 // Load data functionality
 async function getDatas() {
@@ -17,20 +17,19 @@ async function getDatas() {
             .single();
 
         if (error) {
-            console.error(error);
+            console.error("Error fetching cocktail details:", error);
             return;
         }
 
-        let container = "";
         // Generate HTML for cocktail details
-        container += `
-            <div class="info">
+        let container = `
+            <div class="info" data-id="${cocktail.id}">
                 <div class="user">
                     <img src="assets/imgs/zoe.jpg" alt="User Profile Image">
                     <span class="username">Reonest</span>
                 </div>
                 <div class="recipe">
-                    <img src="${cocktail.image_path}" alt="${cocktail.cocktail_name}">
+                    <img src="${cocktailImageUrl}${cocktail.image_path}" alt="${cocktail.cocktail_name}">
                     <div class="card-info">
                         <h3>${cocktail.cocktail_name}</h3>
                     </div>
@@ -58,29 +57,9 @@ async function getDatas() {
         // Assign container to the element
         document.getElementById("detail").innerHTML = container;
     } catch (error) {
-        console.error(error);
+        console.error("Error in getDatas function:", error);
     }
-};
+}
 
-// In recipe.js
-// const favoriteIcon = document.getElementById("favorite");
-
-// favoriteIcon.addEventListener("click", async () => {
-//     // Identify the cocktail
-//     const cocktailId = cocktail_id; // Replace with the actual ID of the cocktail
-//     const cocktailName = cocktail_name; // Replace with the actual name of the cocktail
-
-//     // Store favorite in database
-//     const { data, error } = await supabase
-//         .from('favorites')
-//         .insert([{ cocktail_id: cocktail_id, cocktail_name: cocktail_name }]);
-    
-//     if (error) {
-//         console.error("Error favoriting cocktail:", error);
-//         return;
-//     }
-
-//     console.log("Cocktail favorited successfully!");
-// });
-
-
+// Call the getDatas function to load data
+getDatas();

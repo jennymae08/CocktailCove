@@ -21,9 +21,9 @@
 
     
     <link rel="stylesheet" href="./css/ginBilog.css" />
-    <script type="module" src="./js/system/upload.js"></script>
+    <!-- <script type="module" src="./js/system/upload.js"></script> -->
     <script type="module" src="./js/system/recipe.js"></script>
-    <!-- <script type="module" src="./js/system/ratings.js"></script> -->
+    <!-- <script type="module" src="./js/system/ratings1.js"></script> -->
     <script type="module" src="./js/system/comment.js"></script>
 
     <link rel="icon" type="image/x-icon" href="./assets/icon/favicon.ico" />
@@ -46,7 +46,7 @@
         </div>
       </nav>
       
-    <!-- recipe info -->
+   <!-- recipe info -->
 <div class="details" id="detail">
   <!-- <div class="info">
       <div class="user">
@@ -201,23 +201,23 @@
           <div class="edit">EDIT</div>
         </div>
         <div class="star-widget" id="star-widget">
-            <input type="radio" name="rate" id="rate-5">
+            <input type="radio" name="rate" id="rate-5" value="5">
             <label for="rate-5" class="fas fa-star"></label>
-            <input type="radio" name="rate" id="rate-4">
+            <input type="radio" name="rate" id="rate-4" value="4">
             <label for="rate-4" class="fas fa-star"></label>
-            <input type="radio" name="rate" id="rate-3">
+            <input type="radio" name="rate" id="rate-3" value="3">
             <label for="rate-3" class="fas fa-star"></label>
-            <input type="radio" name="rate" id="rate-2">
+            <input type="radio" name="rate" id="rate-2" value="2">
             <label for="rate-2" class="fas fa-star"></label>
-            <input type="radio" name="rate" id="rate-1">
+            <input type="radio" name="rate" id="rate-1" value="1">
             <label for="rate-1" class="fas fa-star"></label>
             
-            <form id="comments">
+            <form id="form-comment">
               <header></header>
               <div class="textarea">
                 <textarea cols="30"
-                name="your-comment" 
-                id="your-comment"
+                name="comment" 
+                id="comment"
                 placeholder="Describe your experience..."></textarea>
               </div>
               <div class="btn">
@@ -227,6 +227,7 @@
         </div>
       </div>
     </section>
+    
 
         <!--bottom navbar-->
     <!-- <div class="bot-nav">

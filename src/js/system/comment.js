@@ -1,91 +1,82 @@
-import {supabase, successNotification, errorNotification } from "../main";
-
-
-const cocktailImageUrl = "https://hiyluoiecwditapzngvr.supabase.co/storage/v1/object/public/Cocktail/";
+import { supabase, successNotification, errorNotification } from "../main";
 
 // Load data
-getDatas();
+const urlParams = new URLSearchParams(window.location.search);
+const cocktailId = urlParams.get('id');
+getDatas(cocktailId);
 
-const comments = document.getElementById("comments");
+async function getDatas(id) {
+    try {
+        // Fetch comments data for a specific cocktail from Supabase
+        let { data: comments, error } = await supabase
+            .from('post')
+            .select('*')
+            .eq('id',id);// Filter by cocktail_id
+        
+        if (error) {
+            throw error;
+        }
+        
+        // Construct HTML for displaying comments
+        let container = "";
+        comments.forEach((comment) => {
+            container += `
+            <div class="box-top" data-id="${comment.id}">
+                <div class="profile" data-id="${comment.user_id}">
+                    <div class="profile-img">
+                        <img src="${comment.user_profile}">
+                    </div>
+                    <div class="user-name">
+                        <strong>${comment.username}</strong>
+                    </div>
+                    <div class="reviews">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                <div class="user-comment">
+                    <p>${comment.comment}</p>
+                </div>
+            </div>`;
+        });
 
+        // Display comments HTML
+        document.getElementById("testimonial").innerHTML = container;
+    } catch (error) {
+        console.error(error);
+    }
+}
 
-comments.onsubmit = async (e) => {
+const form_comment = document.getElementById("form-comment");
+
+form_comment.onsubmit = async (e) => {
     e.preventDefault();
 
-    // Get the post ID; you should replace 'postId' with the actual ID of the post you're commenting on
-    const postId = 'postId';
+    // Get form data
+    const formData = new FormData(form_comment);
+    const comment = formData.get("comment");
 
-    // Get the comment text from the form
-    const commentText = formData.get("your-comment");
+    // Insert comment into Supabase database
+    const { data: postData, error: postError } = await supabase
+    .from('post')
+    .insert([{ 
+        comment_text: comment,
+        post_id: cocktailId // Gamiton ang retrieved cocktailId dinhi
+    }]);
 
-    // Insert the comment into the 'comments' table with the appropriate _post_id
-    const { data, error } = await supabase
-        .from('comments')
-        .insert([
-            {
-                comment_text: commentText,
-                _post_id: postId
-            }
-        ]);
-
-    if (error == null) {
-        successNotification("You Commented on this cocktail!", 10);
-        // Reload data
-        getDatas();
-        comments.reset(); // Reset the form after successful submission
+    // Handle success or error
+    if (postError == null) {
+        successNotification("Comment Successfully Added!", 10);
+        // Reload data or update UI as needed
+        getDatas(cocktailId);
     } else {
-        errorNotification("Try again!", 10);
-        console.log(error);
+        errorNotification("Something went wrong. Cannot add comment!", 10);
+        console.log(postError);
     }
-};
 
-
-
-// Load data functionality
-async function getDatas() {
-    // Get all rows
-    
-    let { data: comments, error } = await supabase
-    .from('comments')
-    .select('*')
-            
-    // Temporary store for the HTML structure
-    let container = "";
-    //get each item
-    comments.forEach((cocktail) => {
-        container += `
-        <div class="box-top" data-id="${cocktail.id}">
-          <!-- profile---------->
-          <div class="profile" data-id="${cocktail.user_id}">
-            <div class="profile-img">
-              <img src="${cocktail.user_profile}">
-            </div>
-            <!-- username --------->
-            <div class="user-name">
-              <strong>${cocktail.username}</strong>
-            </div>
-            <!-- reviews---- -->
-            <div class="reviews">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="far fa-star"></i>
-            </div>
-
-          </div>
-          <!-- comments----------- -->
-          <div class="user-comment">
-            <p>${cocktail.comment_text}</p>
-          </div>
-        </div>
-      </div>`;
-    });
-
-    
-    
-    //assign container to the element
-    document.getElementById("testimonial").innerHTML = container;
-
-
+    // Reset the form
+    form_comment.reset();
 };
