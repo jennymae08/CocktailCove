@@ -25,28 +25,35 @@ form_login.onsubmit = async (e) => {
     // console.log(session);
 
     //if user can be accessed; or user is already verified
-    if(session != null){
-        localStorage.setItem("access_token",session.access_token);
-        localStorage.setItem("refresh_token",session.refresh_token);
+    if (session != null) {
+        // Store tokens for API
+        localStorage.setItem("access_token", session.access_token);
+        localStorage.setItem("refresh_token", session.refresh_token);
 
-        //role based authentication
-        
-        // let { data: user_info, error } = await supabase
-        //     .from('user_info')
-        //     .select('*')
-        //     .eq('user_id', user.id);
+        // Save user id in local storage
+        localStorage.setItem("auth_id", user?.id);
 
-        // console.log(user_info);
-        // // localStorage.setItem("role",user_info.role);
-        
-        
+        // Fetch user profiles
+        let { data: profiles, error } = await supabase
+            .from("user_info")
+            .select("*")
+            .eq("user_id", localStorage.getItem("auth_id"));
+
+        localStorage.setItem("user_id", profiles[0].id);
+        console.log(profiles[0].id);
+
+        // Redirect to home page after successful login
+        successNotification("Login Successfully", 10);
+        window.location.pathname = '/collection.html';
+
+       
     }
     
 
     if(error == null){
         successNotification("Login Successfully!",20);
         //redirect 
-        window.location.pathname = '/collection.html';
+       /*  window.location.pathname = '/collection.html'; */
     } else {
         errorNotification("Something wrong happened!",10);
         console.log(error);

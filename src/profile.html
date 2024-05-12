@@ -53,11 +53,17 @@
     
       <div class="container">
         <div class="img-profile">
-            <img src="assets/imgs/default.jpg" alt="" id="photo">
-            <input type="file" id="file">
+          <div id="profileContainer"></div>
+           
+            <input type="file" id="file"  
+            name="image_path"
+            accept="image/*"
+            >
             <label for="file" id="uploadbtn"><i class="fa-solid fa-camera"></i></label>
-            <div class="name" id="photoName">James Smith</div> 
-            <div class="id">ID 121210</div>
+            <div id="container1">
+             
+            </div>
+            
         </div>
     </div>
     
@@ -67,14 +73,8 @@
           <button class="btn" id="shareProfileBtn">Share Profile</button>
         </div> -->
 
-
-      <div class="item">
-        <i class="fa-solid fa-user"></i>
-        <span id="name" onclick="edit('name')">James Smith</span> <!-- Click to edit the name -->
-        <div class="icon" onclick="edit('name')">
-            <i class="fa-solid fa-chevron-right"></i>
-        </div>
-    </div>
+<div id="container2" ></div>
+      
 
       <div class="item">
         <i class="fa-solid fa-cake-candles"></i>
@@ -165,27 +165,7 @@
 
   <script>
     // Check if naa bay saved image daan
-    var savedImage = localStorage.getItem('profileImage');
-    if (savedImage) {
-      document.getElementById('photo').setAttribute('src', savedImage);
-    }
-
-    document.getElementById('uploadbtn').addEventListener('click', function () {
-      document.getElementById('file').click();
-    });
-
-    document.getElementById('file').addEventListener('change', function () {
-      var file = this.files[0];
-      if (file) {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-          document.getElementById('photo').setAttribute('src', e.target.result);
-          // Save the image data to local storage
-          localStorage.setItem('profileImage', e.target.result);
-        }
-        reader.readAsDataURL(file);
-      }
-    });
+   
   </script>
 
 
@@ -240,6 +220,7 @@
   <!-- <script src="./js/info.js"></script> -->
   <!-- <script type="module" src="./js/logout.js"></script> -->
   <script type="module" src="./js/bottomNav.js"></script>
+  <script type="module" src="./js/Backend/profile.js"></script>
   
 
 

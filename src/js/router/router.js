@@ -1,10 +1,15 @@
 function setRouter(){
 
+
+  const isLoggedIn = localStorage.getItem("access_token") !== null;
+  /* const userRole = localStorage.getItem("Role"); */
+
     switch (window.location.pathname) {
         case "/":
         case "/login.html":
         case "/register.html":
-            if (localStorage.getItem("access_token")) {
+        case "/index.html":
+            if (isLoggedIn) {
                 window.location.pathname = "/collection.html";
             }
             break;
@@ -23,7 +28,7 @@ function setRouter(){
         case "/profile1.html":
         case "/more.html":
             
-            if(!localStorage.getItem("access_token")){
+            if(!isLoggedIn){
                 window.location.pathname = "/login.html";
             }
             break;
