@@ -1,82 +1,71 @@
-// Frontend Implementation
-document.getElementById("star-widget").addEventListener("click", async (event) => {
-    if (event.target.matches("input[type='radio']")) {
-        const rating = event.target.value;
-        const commentTextarea = document.querySelector(".textarea textarea");
-        const comment = commentTextarea.value;
-        const userId = getUserId(); // Implement a function to get the current user's ID
+import { supabase, successNotification, errorNotification } from "../main";
 
-        try {
-            // Send a request to Supabase to store the rating and comment
-            const { data, error } = await supabase
-                .from('ratings')
-                .insert({
-                    post_id: postId, // Assuming you have access to the post ID
-                    rating_value: rating,
-                    rating_date: new Date().toISOString(),
-                    comment: comment,
-                    user_id: userId
-                });
+// Function to calculate the overall rating of a cocktail
+function calculateOverallRating(ratings) {
+    if (ratings.length === 0) {
+        return 0; // Return 0 if no ratings yet
+    }
 
-            if (error) {
-                throw error;
-            }
+    // Calculate the sum of all ratings
+    const sum = ratings.reduce((total, rating) => total + rating, 0);
 
-            // Display success message or update UI
-            console.log("Rating and comment submitted successfully!");
-            // You can update the UI here, like showing a success message or refreshing the comments section
-        } catch (error) {
-            console.error("Error submitting rating and comment:", error.message);
+    // Calculate the average rating
+    const average = sum / ratings.length;
+
+    // Round the average rating to 1 decimal place
+    return Math.round(average * 10) / 10;
+}
+
+// Function to display the overall rating in HTML
+function displayOverallRating(cocktailId, overallRating) {
+    const cocktailElement = document.querySelector(`[data-id="${cocktailId}"]`);
+    const starRatingElement = cocktailElement.querySelector('.star-rating');
+    starRatingElement.innerHTML = ''; // Clear existing stars
+
+    // Generate star icons based on the overall rating
+    for (let i = 1; i <= 5; i++) {
+        if (i <= overallRating) {
+            starRatingElement.innerHTML += '<i class="fas fa-star"></i>';
+        } else {
+            starRatingElement.innerHTML += '<i class="far fa-star"></i>';
         }
     }
-});
+}
 
-// Backend Implementation (assuming you have a table named 'ratings' in your Supabase database)
-async function getRatingsAndComments() {
+// Function to fetch ratings for all cocktails and display overall ratings
+async function fetchAndDisplayOverallRatings() {
     try {
-        // Query Supabase to get ratings and comments for the current post
-        const { data, error } = await supabase
-            .from('ratings')
-            .select('*')
-            .eq('post_id', postId); // Assuming you have access to the post ID
+        // Fetch all cocktails from the database
+        const { data: cocktails, error } = await supabase
+        .from('comments')
+        .select('*');
 
         if (error) {
             throw error;
         }
 
-        // Process the data and display ratings and comments in the UI
-        displayRatingsAndComments(data);
+        // Loop through each cocktail
+        for (const cocktail of cocktails) {
+            // Fetch ratings for the current cocktail
+            const { data: ratings, error: ratingError } = await supabase
+                .from('comments')
+                .select('ratings')
+                .eq('post_id', cocktail.id);
+
+            if (ratingError) {
+                throw ratingError;
+            }
+
+            // Calculate the overall rating for the current cocktail
+            const overallRating = calculateOverallRating(ratings.map(rating => rating.ratings));
+
+            // Display the overall rating in the HTML
+            displayOverallRating(cocktail.id, overallRating);
+        }
     } catch (error) {
-        console.error("Error fetching ratings and comments:", error.message);
+        console.error('Error fetching and displaying overall ratings:', error.message);
     }
 }
 
-// Function to display ratings and comments in the UI
-function displayRatingsAndComments(data) {
-    const ratingsContainer = document.getElementById("ratings-container");
-
-    // Clear previous ratings and comments
-    ratingsContainer.innerHTML = "";
-
-    // Iterate over each rating and comment and create HTML elements to display them
-    data.forEach((item) => {
-        const ratingElement = document.createElement("div");
-        ratingElement.classList.add("rating");
-
-        const ratingStars = document.createElement("div");
-        ratingStars.classList.add("rating-stars");
-        ratingStars.textContent = `Rating: ${item.rating_value}`;
-
-        const commentElement = document.createElement("div");
-        commentElement.classList.add("comment");
-        commentElement.textContent = item.comment;
-
-        ratingElement.appendChild(ratingStars);
-        ratingElement.appendChild(commentElement);
-
-        ratingsContainer.appendChild(ratingElement);
-    });
-}
-
-// Call the function to load ratings and comments when the page loads
-getRatingsAndComments();
+// Call the function to fetch and display overall ratings when the page loads
+window.addEventListener('load', fetchAndDisplayOverallRatings);

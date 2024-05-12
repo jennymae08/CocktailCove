@@ -1,6 +1,6 @@
 import { supabase, successNotification, errorNotification } from "../main";
 
-const cocktailImageUrl = "https://hiyluoiecwditapzngvr.supabase.co/storage/v1/object/public/Cocktail/";
+const cocktailImageUrl = "https://hiyluoiecwditapzngvr.supabase.co/storage/v1/object/public/Cocktail/public/";
 
 // Load data
 getDatas();
