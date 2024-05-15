@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Base URL for cocktail images
     const cocktailImageUrl = "https://hiyluoiecwditapzngvr.supabase.co/storage/v1/object/public/Cocktail/";
+    const profileImageUrl = "https://hiyluoiecwditapzngvr.supabase.co/storage/v1/object/public/profile/";
+    const defaultProfileImage = "path/to/default/profile/image.png"; // Replace with your default profile image path
 
     // Load data functionality
     async function getDatas() {
@@ -16,7 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             // Get specific cocktail by id
             let { data: fetchedCocktail, error } = await supabase
                 .from('post')
-                .select('*')
+                .select('*, user_info(*)')
                 .eq('id', id)
                 .single();
 
@@ -27,12 +29,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             cocktail = fetchedCocktail; // Assign the fetched cocktail to the cocktail variable
 
+            const userProfile = cocktail.user_info;
+            const userProfileImage = userProfile && userProfile.image_path 
+                ? profileImageUrl + userProfile.image_path 
+                : defaultProfileImage;
+
             // Generate HTML for cocktail details
             let container = `
                 <div class="info" data-id="${cocktail.id}">
                     <div class="user">
-                        <img src="assets/imgs/zoe.jpg" alt="User Profile Image">
-                        <span class="username">Reonest</span>
+                        <img src="${userProfileImage}" alt="User Profile Image">
+                        <span class="username">${userProfile ? userProfile.username : 'Unknown User'}</span>
                     </div>
                     <div class="recipe">
                         <img src="${cocktailImageUrl}${cocktail.image_path}" alt="${cocktail.cocktail_name}">
@@ -69,6 +76,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Call the getDatas function to load data
     getDatas();
+
+    // Function to favorite a cocktail
     async function favoriteCocktail(post_id, image_path, cocktail_name) {
         try {
             // Insert a new record into the favorites table
@@ -78,8 +87,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                     { 
                         post_id: post_id,
                         image_path: image_path,
-                        cocktail_name: cocktail_name, // Insert cocktail_name field
-                        // user_id: userId // Insert user_id field
+                        cocktail_name: cocktail_name,
+                        user_id: userId // Insert user_id field
                     }
                 ]);
     
@@ -97,43 +106,36 @@ document.addEventListener('DOMContentLoaded', async () => {
             return null;
         }
     }
-    
 
-// Get the user ID from local storage
-const userId = localStorage.getItem("auth_id");
+    // Get the user ID from local storage
+    const userId = localStorage.getItem("auth_id");
 
-// Add event listener to the star icon for favoriting
-const starIcon = document.getElementById('star-icon');
+    // Add event listener to the star icon for favoriting
+    const starIcon = document.getElementById('star-icon');
 
-starIcon.addEventListener('click', async () => {
-    try {
-        // Ensure cocktail is defined before attempting to favorite
-        if (!cocktail) {
-            console.error('No cocktail data available');
-            return;
+    starIcon.addEventListener('click', async () => {
+        try {
+            // Ensure cocktail is defined before attempting to favorite
+            if (!cocktail) {
+                console.error('No cocktail data available');
+                return;
+            }
+
+            // Call getDatas function to ensure cocktail data is available
+            await getDatas();
+
+            // Call the favoriteCocktail function to favorite the cocktail
+            await favoriteCocktail(cocktail.id, cocktail.image_path, cocktail.cocktail_name); 
+
+            // Optionally, update the UI to reflect that the cocktail has been favorited
+            starIcon.classList.add('favorited');
+
+            // Optionally, display a success notification
+            successNotification('Saved to Favorites');
+        } catch (error) {
+            console.error('Error favoriting cocktail:', error);
+            // Optionally, display an error notification
+            errorNotification('Failed to save to favorites. Please try again.');
         }
-
-        // Call getDatas function to ensure cocktail data is available
-        await getDatas();
-
-        // Call the favoriteCocktail function to favorite the cocktail
-        await favoriteCocktail(cocktail.id, cocktail.image_path, cocktail.cocktail_name); 
-
-        // Optionally, update the UI to reflect that the cocktail has been favorited
-        starIcon.classList.add('favorited');
-
-        // Optionally, display a success notification
-        successNotification('Saved to Favorites');
-    } catch (error) {
-        console.error('Error favoriting cocktail:', error);
-        // Optionally, display an error notification
-        errorNotification('Failed to save to favorites. Please try again.');
-    }
-});
-
-
-// Call the getDatas function to load data
-document.addEventListener('DOMContentLoaded', async () => {
-    await getDatas();
-});
+    });
 });

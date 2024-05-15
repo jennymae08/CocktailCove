@@ -1,9 +1,14 @@
 import { supabase, successNotification, errorNotification } from "../main";
 
 const cocktailImageUrl = "https://hiyluoiecwditapzngvr.supabase.co/storage/v1/object/public/Cocktail/";
+const profileImageUrl = "https://hiyluoiecwditapzngvr.supabase.co/storage/v1/object/public/profile/";
+const defaultProfileImage = "https://hiyluoiecwditapzngvr.supabase.co/storage/v1/object/public/profile/public/DP1.jpg"; // Set your default profile image path
+const userId = localStorage.getItem("user_id"); // Get the user ID from local storage
 
-// Load data
-getDatas();
+// Call the function to fetch and display cocktail data after DOM content is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    getDatas();
+});
 
 // Form submission handler
 const form_item = document.getElementById("form_item");
@@ -18,7 +23,7 @@ form_item.onsubmit = async (e) => {
     const { data: imageUploadData, error: imageUploadError } = await supabase
         .storage
         .from('Cocktail')
-        .upload("public/" + image.name , image, {
+        .upload("public/" + image.name, image, {
             cacheControl: '3600',
             upsert: true,
         });
@@ -38,6 +43,8 @@ form_item.onsubmit = async (e) => {
                 cocktail_name: formData.get("cocktail_name"), 
                 ingredients: formData.get("ingredients"), 
                 procedures: formData.get("procedures"),
+                user_info_id: userId, // Include the user ID
+                overall_rating: 0 // Initialize overall_rating to 0
             },
         ]);
 
@@ -67,7 +74,11 @@ async function getDatas() {
 
         const { data: posts, error } = await supabase
             .from('post')
-            .select('*');
+            .select(`
+                *,
+                user_info ( username, image_path ),
+                overall_rating
+            `);
 
         if (error) {
             console.error("Error fetching cocktail data:", error);
@@ -76,22 +87,25 @@ async function getDatas() {
 
         let container = "";
         posts.forEach((cocktail) => {
+            const userProfile = cocktail.user_info;
+            const userProfileImage = userProfile && userProfile.image_path 
+                ? profileImageUrl + userProfile.image_path 
+                : defaultProfileImage;
+
+            const overallRating = cocktail.overall_rating || 0; // Get overall rating directly from the post
+
             container += `
                 <div class="col-6 col-md-3 py-3" data-id="${cocktail.id}">
                     <div class="user-profile">
-                        <img src="${cocktail.image_path}" alt="User Profile Image">
-                        <span class="username">Reonest</span>
+                        <img src="${userProfileImage}" alt="User Profile Image">
+                        <span class="username">${userProfile ? userProfile.username : 'Unknown User'}</span>
                     </div>
                     <div class="card">
                         <img src="${cocktailImageUrl + cocktail.image_path}" alt="">
                         <div class="card-info">
                             <h3>${cocktail.cocktail_name}</h3>
                             <div class="star-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="far fa-star"></i>
+                                ${generateStarRating(overallRating)}
                             </div>
                             <a href="recipe.html?id=${cocktail.id}" class="btn view-button">View Recipe</a>
                         </div>
@@ -104,3 +118,22 @@ async function getDatas() {
         console.error("Error fetching cocktail data:", error);
     }
 };
+
+// Function to generate star rating HTML
+function generateStarRating(rating) {
+
+    console.log('Rating:', rating);
+
+    const maxRating = 5; // Maximum rating value
+    let starsHTML = '';
+    for (let i = 1; i <= maxRating; i++) {
+        if (i <= rating) {
+            // If current star is less than or equal to the rating, display a filled star
+            starsHTML += '<i class="fas fa-star"></i>';
+        } else {
+            // Otherwise, display an empty star
+            starsHTML += '<i class="far fa-star"></i>';
+        }
+    }
+    return starsHTML;
+}

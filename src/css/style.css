@@ -106,6 +106,7 @@ section{
   height: 450px;
   border-radius: 20px;
   object-fit: cover;
+  border: 1px solid white;
 }
 @media (max-width: 600px) {
   .carousel .carousel-item img{
